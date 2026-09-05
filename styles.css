@@ -22,7 +22,7 @@ h2 { font-size: 22px; margin-bottom: 0; }
 .panel-note { color: var(--muted); font-size: 12px; margin: 8px 0 0; max-width: 660px; }
 .lede { color: var(--muted); font-size: 17px; max-width: 620px; }
 .muted { color: var(--muted); font-size: 13px; }
-.cards { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 18px; }
+.cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin-bottom: 18px; }
 .card, .panel { background: rgba(21, 29, 39, .9); border: 1px solid var(--line); border-radius: 14px; }
 .card { padding: 18px; }
 .card-label { color: var(--muted); font-size: 12px; }

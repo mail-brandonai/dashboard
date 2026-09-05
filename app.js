@@ -9,7 +9,8 @@ const labels = {
   total: "CSV files",
   pass: "Passed",
   insufficient: "Insufficient overlap",
-  waiting: "Awaiting reference"
+  waiting: "Awaiting reference",
+  pending: "Products pending"
 };
 
 function safe(value, fallback = "—") {
@@ -18,20 +19,29 @@ function safe(value, fallback = "—") {
 
 function statusLabel(status) {
   return {
+    PASS: "Pass",
+    PARTIAL: "Partial · pending product",
     PASS_RAW: "Pass",
     PASS_COMPOSITE: "Pass · composite",
     INSUFFICIENT_OVERLAP: "Insufficient overlap",
     WAITING_FOR_PRODUCER_REFERENCE: "Awaiting reference",
-    FAIL: "Fail",
+    NOT_STARTED: "Not started",
     NOT_PUBLISHED: "Not published",
+    FAIL: "Fail",
     ERROR: "Error"
   }[status] || safe(status);
 }
 
 function statusClass(status) {
-  if (status === "PASS_RAW" || status === "PASS_COMPOSITE") return "pass";
+  if (status === "PASS" || status === "PASS_RAW" || status === "PASS_COMPOSITE") return "pass";
   if (status === "FAIL" || status === "ERROR") return "fail";
-  if (status === "INSUFFICIENT_OVERLAP" || status === "WAITING_FOR_PRODUCER_REFERENCE") return "warn";
+  if (
+    status === "PARTIAL" ||
+    status === "INSUFFICIENT_OVERLAP" ||
+    status === "WAITING_FOR_PRODUCER_REFERENCE" ||
+    status === "NOT_STARTED" ||
+    status === "NOT_PUBLISHED"
+  ) return "warn";
   return "neutral";
 }
 
@@ -56,6 +66,9 @@ function card(label, value) {
 }
 
 function profileGateText(item, minimum) {
+  if (item.profile_gate === false || item.product === "CPPO") {
+    return item.product === "CPPO" ? "No SVWAP profile gate" : "No profile gate";
+  }
   const counts = item.profile_overlap_counts || {};
   const text = "R1 " + safe(counts.R1, "0") +
     " · R2 " + safe(counts.R2, "0") +
@@ -63,20 +76,78 @@ function profileGateText(item, minimum) {
   return minimum ? text + " (minimum " + safe(minimum, "0") + " each)" : text;
 }
 
+function productBundles(report) {
+  if (Array.isArray(report.products)) return report.products;
+  return [{
+    product: "SVWAP",
+    contract: report.contract,
+    status: report.status,
+    minimum_overlap_rows: report.minimum_overlap_rows,
+    reports: Array.isArray(report.reports) ? report.reports : [],
+    status_counts: report.status_counts || {},
+    source_commit: report.source_commit
+  }];
+}
+
+function flattenReports(report) {
+  const rows = [];
+  for (const product of productBundles(report)) {
+    const productReports = Array.isArray(product.reports) ? product.reports : [];
+    if (productReports.length) {
+      rows.push(...productReports.map(item => ({
+        ...item,
+        product: product.product,
+        contract: product.contract,
+        minimum_overlap_rows: product.minimum_overlap_rows,
+        source_commit: product.source_commit
+      })));
+    } else {
+      rows.push({
+        product: product.product,
+        contract: product.contract,
+        asset: "—",
+        timeframe: product.base_timeframe || "15m",
+        csv: "—",
+        status: product.status || "NOT_PUBLISHED",
+        raw_parity: null,
+        producer_overlap_rows: 0,
+        profile_gate: false,
+        evidence: product.message || "No published audit evidence"
+      });
+    }
+  }
+  return rows;
+}
+
+function aggregate(report, rows) {
+  const counts = {};
+  rows.forEach(item => { counts[item.status] = (counts[item.status] || 0) + 1; });
+  const bundles = productBundles(report);
+  const pending = bundles.filter(item => !["PASS", "PASS_RAW", "PASS_COMPOSITE"].includes(item.status)).length;
+  return {
+    total: rows.filter(item => item.csv !== "—").length,
+    pass: (counts.PASS_RAW || 0) + (counts.PASS_COMPOSITE || 0),
+    insufficient: counts.INSUFFICIENT_OVERLAP || 0,
+    waiting: counts.WAITING_FOR_PRODUCER_REFERENCE || 0,
+    pending,
+    counts
+  };
+}
 
 function render(report) {
-  const reports = Array.isArray(report.reports) ? report.reports : [];
-  const counts = report.status_counts || {};
+  const rows = flattenReports(report);
+  const totals = aggregate(report, rows);
   summary.replaceChildren(
-    card(labels.total, reports.length),
-    card(labels.pass, (counts.PASS_RAW || 0) + (counts.PASS_COMPOSITE || 0)),
-    card(labels.insufficient, counts.INSUFFICIENT_OVERLAP || 0),
-    card(labels.waiting, counts.WAITING_FOR_PRODUCER_REFERENCE || 0)
+    card(labels.total, totals.total),
+    card(labels.pass, totals.pass),
+    card(labels.insufficient, totals.insufficient),
+    card(labels.waiting, totals.waiting),
+    card(labels.pending, totals.pending)
   );
   overall.replaceChildren(badge(report.status || "NOT_PUBLISHED"));
   updated.textContent = report.generated_at ? "Generated " + report.generated_at : "No published report yet";
 
-  if (!reports.length) {
+  if (!rows.length) {
     empty.hidden = false;
     tableWrap.replaceChildren();
     return;
@@ -85,7 +156,7 @@ function render(report) {
   const table = document.createElement("table");
   const head = document.createElement("thead");
   const headerRow = document.createElement("tr");
-  ["Asset", "Timeframe", "CSV", "Disposition", "Raw parity", "Complete shared rows", "Profile gate", "Evidence"].forEach(textValue => {
+  ["Product", "Asset", "Timeframe", "CSV", "Disposition", "Raw parity", "Complete shared rows", "Contract gate", "Evidence"].forEach(textValue => {
     const th = document.createElement("th");
     th.textContent = textValue;
     headerRow.append(th);
@@ -93,22 +164,24 @@ function render(report) {
   head.append(headerRow);
   const body = document.createElement("tbody");
 
-  for (const item of reports) {
+  for (const item of rows) {
     const tr = document.createElement("tr");
     const values = [
+      safe(item.product),
       safe(item.asset),
       safe(item.timeframe),
       safe(item.csv),
       statusLabel(item.status),
       item.raw_parity === true ? "Pass" : item.raw_parity === false ? "Fail" : "Not run",
       safe(item.producer_overlap_rows, "0") + " rows",
-      profileGateText(item, report.minimum_overlap_rows),
-      item.composite_repair_available ? "Composite repair available" :
-        item.mismatch_count ? safe(item.mismatch_count) + " mismatches" : "No mismatch evidence"
+      profileGateText(item, item.minimum_overlap_rows),
+      item.evidence ||
+        (item.composite_repair_available ? "Composite repair available" :
+        item.mismatch_count ? safe(item.mismatch_count) + " mismatches" : "No mismatch evidence")
     ];
     values.forEach((value, index) => {
       const td = document.createElement("td");
-      if (index === 3) td.append(badge(item.status));
+      if (index === 4) td.append(badge(item.status));
       else td.textContent = value;
       tr.append(td);
     });

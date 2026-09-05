@@ -1,66 +1,92 @@
 {
-  "audit_version": "svwap.csv.repair.audit.v2",
-  "contract": "svwap.canonical.packet.v1",
+  "audit_version": "mso.dashboard.audit.v1",
   "generated_at": "2026-09-05T19:11:49.661491+00:00",
-  "minimum_overlap_rows": 12,
-  "minimum_overlap_scope": "independently per CSV and profile",
-  "reports": [
+  "minimum_overlap_scope": "per product contract",
+  "products": [
     {
-      "asset": "BINANCE:BTCUSDT.P",
-      "composite_repair_available": false,
-      "csv": "20260905T0945Z.csv",
-      "mismatch_count": 0,
-      "mismatch_fields": [],
-      "producer_overlap_rows": 12,
-      "profile_overlap_counts": {
-        "R1": 12,
-        "R2": 12,
-        "R3": 12
+      "product": "SVWAP",
+      "audit_version": "svwap.csv.repair.audit.v2",
+      "contract": "svwap.canonical.packet.v1",
+      "status": "PASS",
+      "minimum_overlap_rows": 12,
+      "minimum_overlap_scope": "independently per CSV and profile",
+      "generated_at": "2026-09-05T19:11:49.661491+00:00",
+      "source_commit": "0d198defc444567e4d9c52452cfc8bd09485fb95",
+      "status_counts": {
+        "PASS_RAW": 3
       },
-      "profile_overlap_pass": true,
-      "raw_parity": true,
-      "status": "PASS_RAW",
-      "timeframe": "15m"
+      "reports": [
+        {
+          "asset": "BINANCE:BTCUSDT.P",
+          "composite_repair_available": false,
+          "csv": "20260905T0945Z.csv",
+          "mismatch_count": 0,
+          "mismatch_fields": [],
+          "producer_overlap_rows": 12,
+          "profile_overlap_counts": {
+            "R1": 12,
+            "R2": 12,
+            "R3": 12
+          },
+          "profile_overlap_pass": true,
+          "raw_parity": true,
+          "status": "PASS_RAW",
+          "timeframe": "15m"
+        },
+        {
+          "asset": "BINANCE:ETHUSDT.P",
+          "composite_repair_available": false,
+          "csv": "20260905T1000Z.csv",
+          "mismatch_count": 0,
+          "mismatch_fields": [],
+          "producer_overlap_rows": 11,
+          "profile_overlap_counts": {
+            "R1": 12,
+            "R2": 12,
+            "R3": 12
+          },
+          "profile_overlap_pass": true,
+          "raw_parity": true,
+          "status": "PASS_RAW",
+          "timeframe": "15m"
+        },
+        {
+          "asset": "BINANCE:SOLUSDT.P",
+          "composite_repair_available": false,
+          "csv": "20260905T1000Z.csv",
+          "mismatch_count": 0,
+          "mismatch_fields": [],
+          "producer_overlap_rows": 8,
+          "profile_overlap_counts": {
+            "R1": 12,
+            "R2": 12,
+            "R3": 12
+          },
+          "profile_overlap_pass": true,
+          "raw_parity": true,
+          "status": "PASS_RAW",
+          "timeframe": "15m"
+        }
+      ]
     },
     {
-      "asset": "BINANCE:ETHUSDT.P",
-      "composite_repair_available": false,
-      "csv": "20260905T1000Z.csv",
-      "mismatch_count": 0,
-      "mismatch_fields": [],
-      "producer_overlap_rows": 11,
-      "profile_overlap_counts": {
-        "R1": 12,
-        "R2": 12,
-        "R3": 12
+      "product": "CPPO",
+      "audit_version": "cppo.csv.backfill.audit.v1",
+      "contract": "cppo.pro@1.0.0",
+      "base_timeframe": "15m",
+      "status": "NOT_PUBLISHED",
+      "minimum_overlap_rows": 12,
+      "status_counts": {
+        "NOT_PUBLISHED": 1
       },
-      "profile_overlap_pass": true,
-      "raw_parity": true,
-      "status": "PASS_RAW",
-      "timeframe": "15m"
-    },
-    {
-      "asset": "BINANCE:SOLUSDT.P",
-      "composite_repair_available": false,
-      "csv": "20260905T1000Z.csv",
-      "mismatch_count": 0,
-      "mismatch_fields": [],
-      "producer_overlap_rows": 8,
-      "profile_overlap_counts": {
-        "R1": 12,
-        "R2": 12,
-        "R3": 12
-      },
-      "profile_overlap_pass": true,
-      "raw_parity": true,
-      "status": "PASS_RAW",
-      "timeframe": "15m"
+      "source_commit": null,
+      "message": "Awaiting CPPO producer packet reference window and CSV export evidence.",
+      "reports": []
     }
   ],
-  "schema": "svwap.dashboard.audit.v1",
-  "source_commit": "0d198defc444567e4d9c52452cfc8bd09485fb95",
-  "status": "PASS",
+  "status": "PARTIAL",
   "status_counts": {
-    "PASS_RAW": 3
+    "PASS_RAW": 3,
+    "NOT_PUBLISHED": 1
   }
 }
