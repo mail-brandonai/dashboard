@@ -1,6 +1,154 @@
 {
+  "audit_version": "svwap.csv.repair.audit.v2",
+  "contract": "svwap.canonical.packet.v1",
+  "generated_at": "2026-09-05T18:28:59.882877+00:00",
+  "minimum_overlap_rows": 12,
+  "minimum_overlap_scope": "independently per CSV and profile",
+  "reports": [
+    {
+      "asset": "BINANCE:BTCUSDT.P",
+      "composite_repair_available": false,
+      "csv": "20260904T2200Z.csv",
+      "mismatch_count": 72,
+      "mismatch_fields": [
+        "r3_m1",
+        "r3_m2",
+        "r3_m3",
+        "r3_p1",
+        "r3_p2",
+        "r3_p3",
+        "r3_stdev",
+        "r3_vwap"
+      ],
+      "producer_overlap_rows": 9,
+      "profile_overlap_counts": {
+        "R1": 0,
+        "R2": 0,
+        "R3": 0
+      },
+      "profile_overlap_pass": true,
+      "raw_parity": false,
+      "status": "INSUFFICIENT_OVERLAP",
+      "timeframe": "15m"
+    },
+    {
+      "asset": "BINANCE:BTCUSDT.P",
+      "composite_repair_available": false,
+      "csv": "20260905T0945Z.csv",
+      "mismatch_count": 0,
+      "mismatch_fields": [],
+      "producer_overlap_rows": 12,
+      "profile_overlap_counts": {
+        "R1": 0,
+        "R2": 0,
+        "R3": 0
+      },
+      "profile_overlap_pass": true,
+      "raw_parity": true,
+      "status": "PASS_RAW",
+      "timeframe": "15m"
+    },
+    {
+      "asset": "BINANCE:BTCUSDT.P",
+      "composite_repair_available": false,
+      "csv": "20260905T1530Z.csv",
+      "mismatch_count": 16,
+      "mismatch_fields": [
+        "r3_m1",
+        "r3_m2",
+        "r3_m3",
+        "r3_p1",
+        "r3_p2",
+        "r3_p3",
+        "r3_stdev",
+        "r3_vwap"
+      ],
+      "producer_overlap_rows": 2,
+      "profile_overlap_counts": {
+        "R1": 0,
+        "R2": 0,
+        "R3": 0
+      },
+      "profile_overlap_pass": true,
+      "raw_parity": false,
+      "status": "INSUFFICIENT_OVERLAP",
+      "timeframe": "15m"
+    },
+    {
+      "asset": "BINANCE:ETHUSDT.P",
+      "composite_repair_available": false,
+      "csv": "20260904T2145Z.csv",
+      "mismatch_count": 0,
+      "mismatch_fields": [],
+      "producer_overlap_rows": 0,
+      "profile_overlap_counts": {
+        "R1": 0,
+        "R2": 0,
+        "R3": 0
+      },
+      "profile_overlap_pass": false,
+      "raw_parity": false,
+      "status": "WAITING_FOR_PRODUCER_REFERENCE",
+      "timeframe": "15m"
+    },
+    {
+      "asset": "BINANCE:ETHUSDT.P",
+      "composite_repair_available": false,
+      "csv": "20260905T1000Z.csv",
+      "mismatch_count": 0,
+      "mismatch_fields": [],
+      "producer_overlap_rows": 11,
+      "profile_overlap_counts": {
+        "R1": 0,
+        "R2": 0,
+        "R3": 0
+      },
+      "profile_overlap_pass": true,
+      "raw_parity": true,
+      "status": "INSUFFICIENT_OVERLAP",
+      "timeframe": "15m"
+    },
+    {
+      "asset": "BINANCE:SOLUSDT.P",
+      "composite_repair_available": false,
+      "csv": "20260904T2145Z.csv",
+      "mismatch_count": 0,
+      "mismatch_fields": [],
+      "producer_overlap_rows": 0,
+      "profile_overlap_counts": {
+        "R1": 0,
+        "R2": 0,
+        "R3": 0
+      },
+      "profile_overlap_pass": false,
+      "raw_parity": false,
+      "status": "WAITING_FOR_PRODUCER_REFERENCE",
+      "timeframe": "15m"
+    },
+    {
+      "asset": "BINANCE:SOLUSDT.P",
+      "composite_repair_available": false,
+      "csv": "20260905T1000Z.csv",
+      "mismatch_count": 0,
+      "mismatch_fields": [],
+      "producer_overlap_rows": 8,
+      "profile_overlap_counts": {
+        "R1": 0,
+        "R2": 0,
+        "R3": 0
+      },
+      "profile_overlap_pass": true,
+      "raw_parity": true,
+      "status": "INSUFFICIENT_OVERLAP",
+      "timeframe": "15m"
+    }
+  ],
   "schema": "svwap.dashboard.audit.v1",
-  "status": "NOT_PUBLISHED",
-  "message": "The first private audit report has not been published yet.",
-  "reports": []
+  "source_commit": "8c581818fee731a8948a6cf485b6989c4b4e4590",
+  "status": "FAIL",
+  "status_counts": {
+    "INSUFFICIENT_OVERLAP": 4,
+    "PASS_RAW": 1,
+    "WAITING_FOR_PRODUCER_REFERENCE": 2
+  }
 }
