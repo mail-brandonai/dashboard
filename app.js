@@ -55,6 +55,15 @@ function card(label, value) {
   return article;
 }
 
+function profileGateText(item, minimum) {
+  const counts = item.profile_overlap_counts || {};
+  const text = "R1 " + safe(counts.R1, "0") +
+    " · R2 " + safe(counts.R2, "0") +
+    " · R3 " + safe(counts.R3, "0");
+  return minimum ? text + " (minimum " + safe(minimum, "0") + " each)" : text;
+}
+
+
 function render(report) {
   const reports = Array.isArray(report.reports) ? report.reports : [];
   const counts = report.status_counts || {};
@@ -76,7 +85,7 @@ function render(report) {
   const table = document.createElement("table");
   const head = document.createElement("thead");
   const headerRow = document.createElement("tr");
-  ["Asset", "Timeframe", "CSV", "Disposition", "Raw parity", "Overlap", "Profiles", "Evidence"].forEach(textValue => {
+  ["Asset", "Timeframe", "CSV", "Disposition", "Raw parity", "Complete shared rows", "Profile gate", "Evidence"].forEach(textValue => {
     const th = document.createElement("th");
     th.textContent = textValue;
     headerRow.append(th);
@@ -93,9 +102,7 @@ function render(report) {
       statusLabel(item.status),
       item.raw_parity === true ? "Pass" : item.raw_parity === false ? "Fail" : "Not run",
       safe(item.producer_overlap_rows, "0") + " rows",
-      "R1 " + safe(item.profile_overlap_counts && item.profile_overlap_counts.R1, "0") +
-        " · R2 " + safe(item.profile_overlap_counts && item.profile_overlap_counts.R2, "0") +
-        " · R3 " + safe(item.profile_overlap_counts && item.profile_overlap_counts.R3, "0"),
+      profileGateText(item, report.minimum_overlap_rows),
       item.composite_repair_available ? "Composite repair available" :
         item.mismatch_count ? safe(item.mismatch_count) + " mismatches" : "No mismatch evidence"
     ];
