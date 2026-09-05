@@ -3,15 +3,15 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>SVWAP CSV Audit</title>
+  <title>Market State Observatory Audit</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <main class="shell">
     <header class="hero">
-      <p class="eyebrow">SVWAP PRODUCTION DATA</p>
-      <h1>CSV audit dashboard</h1>
-      <p class="lede">A public, redacted view of CSV admission and producer-parity results.</p>
+      <p class="eyebrow">MARKET STATE OBSERVATORY</p>
+      <h1>Producer parity audit</h1>
+      <p class="lede">A public, redacted view of SVWAP and CPPO CSV admission and producer-parity results.</p>
       <p id="updated" class="muted">Loading report…</p>
     </header>
 
@@ -22,7 +22,7 @@
         <div>
           <p class="eyebrow">LATEST AUDIT</p>
           <h2>CSV dispositions</h2>
-          <p class="panel-note">Complete shared rows are timestamps common to all profiles. The profile gate is evaluated independently for R1, R2, and R3.</p>
+          <p class="panel-note">SVWAP profile gates and CPPO shared-close parity are shown as separate product contracts. Complete shared rows are never treated as a substitute for an independent profile or producer-reference gate.</p>
         </div>
         <span id="overall-status" class="badge neutral">Loading</span>
       </div>
@@ -33,7 +33,7 @@
 
     <footer>
       <p>This dashboard intentionally excludes raw CSV bytes, producer packets, storage paths, hashes, and exact mismatch values.</p>
-      <p><a href="https://github.com/mail-brandonai/svwap-csv-backfills">Private audit source repository</a></p>
+      <p><a href="https://github.com/mail-brandonai/dashboard">Audit dashboard source repository</a></p>
     </footer>
   </main>
   <script src="app.js"></script>
