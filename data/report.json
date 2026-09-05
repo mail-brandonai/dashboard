@@ -1,13 +1,13 @@
 {
   "audit_version": "svwap.csv.repair.audit.v2",
   "contract": "svwap.canonical.packet.v1",
-  "generated_at": "2026-09-05T18:28:59.882877+00:00",
+  "generated_at": "2026-09-05T18:50:55.122976+00:00",
   "minimum_overlap_rows": 12,
   "minimum_overlap_scope": "independently per CSV and profile",
   "reports": [
     {
       "asset": "BINANCE:BTCUSDT.P",
-      "composite_repair_available": false,
+      "composite_repair_available": true,
       "csv": "20260904T2200Z.csv",
       "mismatch_count": 72,
       "mismatch_fields": [
@@ -28,7 +28,7 @@
       },
       "profile_overlap_pass": true,
       "raw_parity": false,
-      "status": "INSUFFICIENT_OVERLAP",
+      "status": "PASS_COMPOSITE_REPAIR",
       "timeframe": "15m"
     },
     {
@@ -71,7 +71,7 @@
       },
       "profile_overlap_pass": true,
       "raw_parity": false,
-      "status": "INSUFFICIENT_OVERLAP",
+      "status": "REPAIR_REQUIRED",
       "timeframe": "15m"
     },
     {
@@ -105,7 +105,7 @@
       },
       "profile_overlap_pass": true,
       "raw_parity": true,
-      "status": "INSUFFICIENT_OVERLAP",
+      "status": "PASS_RAW",
       "timeframe": "15m"
     },
     {
@@ -139,16 +139,17 @@
       },
       "profile_overlap_pass": true,
       "raw_parity": true,
-      "status": "INSUFFICIENT_OVERLAP",
+      "status": "PASS_RAW",
       "timeframe": "15m"
     }
   ],
   "schema": "svwap.dashboard.audit.v1",
-  "source_commit": "8c581818fee731a8948a6cf485b6989c4b4e4590",
+  "source_commit": "42fcd08974dd44c9212d8eff40be8530520d135b",
   "status": "FAIL",
   "status_counts": {
-    "INSUFFICIENT_OVERLAP": 4,
-    "PASS_RAW": 1,
+    "PASS_COMPOSITE_REPAIR": 1,
+    "PASS_RAW": 3,
+    "REPAIR_REQUIRED": 1,
     "WAITING_FOR_PRODUCER_REFERENCE": 2
   }
 }
