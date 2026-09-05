@@ -1,7 +1,7 @@
 {
   "audit_version": "svwap.csv.repair.audit.v2",
   "contract": "svwap.canonical.packet.v1",
-  "generated_at": "2026-09-05T18:52:24.887315+00:00",
+  "generated_at": "2026-09-05T18:53:48.874378+00:00",
   "minimum_overlap_rows": 12,
   "minimum_overlap_scope": "independently per CSV and profile",
   "reports": [
