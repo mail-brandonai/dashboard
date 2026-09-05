@@ -1,36 +1,10 @@
 {
   "audit_version": "svwap.csv.repair.audit.v2",
   "contract": "svwap.canonical.packet.v1",
-  "generated_at": "2026-09-05T18:56:30.189387+00:00",
+  "generated_at": "2026-09-05T19:11:49.661491+00:00",
   "minimum_overlap_rows": 12,
   "minimum_overlap_scope": "independently per CSV and profile",
   "reports": [
-    {
-      "asset": "BINANCE:BTCUSDT.P",
-      "composite_repair_available": true,
-      "csv": "20260904T2200Z.csv",
-      "mismatch_count": 72,
-      "mismatch_fields": [
-        "r3_m1",
-        "r3_m2",
-        "r3_m3",
-        "r3_p1",
-        "r3_p2",
-        "r3_p3",
-        "r3_stdev",
-        "r3_vwap"
-      ],
-      "producer_overlap_rows": 9,
-      "profile_overlap_counts": {
-        "R1": 12,
-        "R2": 12,
-        "R3": 12
-      },
-      "profile_overlap_pass": true,
-      "raw_parity": false,
-      "status": "PASS_COMPOSITE_REPAIR",
-      "timeframe": "15m"
-    },
     {
       "asset": "BINANCE:BTCUSDT.P",
       "composite_repair_available": false,
@@ -46,49 +20,6 @@
       "profile_overlap_pass": true,
       "raw_parity": true,
       "status": "PASS_RAW",
-      "timeframe": "15m"
-    },
-    {
-      "asset": "BINANCE:BTCUSDT.P",
-      "composite_repair_available": false,
-      "csv": "20260905T1530Z.csv",
-      "mismatch_count": 16,
-      "mismatch_fields": [
-        "r3_m1",
-        "r3_m2",
-        "r3_m3",
-        "r3_p1",
-        "r3_p2",
-        "r3_p3",
-        "r3_stdev",
-        "r3_vwap"
-      ],
-      "producer_overlap_rows": 2,
-      "profile_overlap_counts": {
-        "R1": 12,
-        "R2": 12,
-        "R3": 12
-      },
-      "profile_overlap_pass": true,
-      "raw_parity": false,
-      "status": "REPAIR_REQUIRED",
-      "timeframe": "15m"
-    },
-    {
-      "asset": "BINANCE:ETHUSDT.P",
-      "composite_repair_available": false,
-      "csv": "20260904T2145Z.csv",
-      "mismatch_count": 0,
-      "mismatch_fields": [],
-      "producer_overlap_rows": 0,
-      "profile_overlap_counts": {
-        "R1": 0,
-        "R2": 0,
-        "R3": 0
-      },
-      "profile_overlap_pass": false,
-      "raw_parity": false,
-      "status": "WAITING_FOR_PRODUCER_REFERENCE",
       "timeframe": "15m"
     },
     {
@@ -111,23 +42,6 @@
     {
       "asset": "BINANCE:SOLUSDT.P",
       "composite_repair_available": false,
-      "csv": "20260904T2145Z.csv",
-      "mismatch_count": 0,
-      "mismatch_fields": [],
-      "producer_overlap_rows": 0,
-      "profile_overlap_counts": {
-        "R1": 0,
-        "R2": 0,
-        "R3": 0
-      },
-      "profile_overlap_pass": false,
-      "raw_parity": false,
-      "status": "WAITING_FOR_PRODUCER_REFERENCE",
-      "timeframe": "15m"
-    },
-    {
-      "asset": "BINANCE:SOLUSDT.P",
-      "composite_repair_available": false,
       "csv": "20260905T1000Z.csv",
       "mismatch_count": 0,
       "mismatch_fields": [],
@@ -144,12 +58,9 @@
     }
   ],
   "schema": "svwap.dashboard.audit.v1",
-  "source_commit": "02295c114e4ab4ef458da2399de0991c7d99acba",
-  "status": "FAIL",
+  "source_commit": "0d198defc444567e4d9c52452cfc8bd09485fb95",
+  "status": "PASS",
   "status_counts": {
-    "PASS_COMPOSITE_REPAIR": 1,
-    "PASS_RAW": 3,
-    "REPAIR_REQUIRED": 1,
-    "WAITING_FOR_PRODUCER_REFERENCE": 2
+    "PASS_RAW": 3
   }
 }
