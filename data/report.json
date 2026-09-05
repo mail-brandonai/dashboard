@@ -1,0 +1,6 @@
+{
+  "schema": "svwap.dashboard.audit.v1",
+  "status": "NOT_PUBLISHED",
+  "message": "The first private audit report has not been published yet.",
+  "reports": []
+}
