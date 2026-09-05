@@ -1,7 +1,7 @@
 {
   "audit_version": "svwap.csv.repair.audit.v2",
   "contract": "svwap.canonical.packet.v1",
-  "generated_at": "2026-09-05T18:50:55.122976+00:00",
+  "generated_at": "2026-09-05T18:52:04.547346+00:00",
   "minimum_overlap_rows": 12,
   "minimum_overlap_scope": "independently per CSV and profile",
   "reports": [
@@ -144,7 +144,7 @@
     }
   ],
   "schema": "svwap.dashboard.audit.v1",
-  "source_commit": "42fcd08974dd44c9212d8eff40be8530520d135b",
+  "source_commit": "ced47b66acac0893af26063d0b7bb2fc4d81fe28",
   "status": "FAIL",
   "status_counts": {
     "PASS_COMPOSITE_REPAIR": 1,
