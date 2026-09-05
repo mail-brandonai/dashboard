@@ -1,7 +1,7 @@
 {
   "audit_version": "svwap.csv.repair.audit.v2",
   "contract": "svwap.canonical.packet.v1",
-  "generated_at": "2026-09-05T18:53:48.874378+00:00",
+  "generated_at": "2026-09-05T18:56:30.189387+00:00",
   "minimum_overlap_rows": 12,
   "minimum_overlap_scope": "independently per CSV and profile",
   "reports": [
@@ -22,9 +22,9 @@
       ],
       "producer_overlap_rows": 9,
       "profile_overlap_counts": {
-        "R1": 0,
-        "R2": 0,
-        "R3": 0
+        "R1": 12,
+        "R2": 12,
+        "R3": 12
       },
       "profile_overlap_pass": true,
       "raw_parity": false,
@@ -39,9 +39,9 @@
       "mismatch_fields": [],
       "producer_overlap_rows": 12,
       "profile_overlap_counts": {
-        "R1": 0,
-        "R2": 0,
-        "R3": 0
+        "R1": 12,
+        "R2": 12,
+        "R3": 12
       },
       "profile_overlap_pass": true,
       "raw_parity": true,
@@ -65,9 +65,9 @@
       ],
       "producer_overlap_rows": 2,
       "profile_overlap_counts": {
-        "R1": 0,
-        "R2": 0,
-        "R3": 0
+        "R1": 12,
+        "R2": 12,
+        "R3": 12
       },
       "profile_overlap_pass": true,
       "raw_parity": false,
@@ -99,9 +99,9 @@
       "mismatch_fields": [],
       "producer_overlap_rows": 11,
       "profile_overlap_counts": {
-        "R1": 0,
-        "R2": 0,
-        "R3": 0
+        "R1": 12,
+        "R2": 12,
+        "R3": 12
       },
       "profile_overlap_pass": true,
       "raw_parity": true,
@@ -133,9 +133,9 @@
       "mismatch_fields": [],
       "producer_overlap_rows": 8,
       "profile_overlap_counts": {
-        "R1": 0,
-        "R2": 0,
-        "R3": 0
+        "R1": 12,
+        "R2": 12,
+        "R3": 12
       },
       "profile_overlap_pass": true,
       "raw_parity": true,
@@ -144,7 +144,7 @@
     }
   ],
   "schema": "svwap.dashboard.audit.v1",
-  "source_commit": "ced47b66acac0893af26063d0b7bb2fc4d81fe28",
+  "source_commit": "02295c114e4ab4ef458da2399de0991c7d99acba",
   "status": "FAIL",
   "status_counts": {
     "PASS_COMPOSITE_REPAIR": 1,
