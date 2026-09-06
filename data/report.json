@@ -1,6 +1,6 @@
 {
   "audit_version": "mso.dashboard.audit.v1",
-  "generated_at": "2026-09-06T13:27:04.301044+00:00",
+  "generated_at": "2026-09-06T14:21:05.637076+00:00",
   "minimum_overlap_scope": "per product contract",
   "products": [
     {
@@ -72,7 +72,7 @@
     {
       "audit_version": "cppo.csv.backfill.audit.v1",
       "contract": "cppo.pro@1.0.0",
-      "generated_at": "2026-09-06T13:27:00.745637+00:00",
+      "generated_at": "2026-09-06T14:21:04.809797+00:00",
       "minimum_overlap_rows": 12,
       "minimum_overlap_scope": "independently per CSV and lane",
       "product": "CPPO",
@@ -190,7 +190,7 @@
           "timeframe": "15m"
         }
       ],
-      "source_commit": "337fb1f7421f12f7f61c7402ab6769f0860ea9a4",
+      "source_commit": "c7c2294bb5a96a00dfa4df554b832c1ce5e1fe93",
       "status": "FAIL",
       "status_counts": {
         "FAIL": 3,
