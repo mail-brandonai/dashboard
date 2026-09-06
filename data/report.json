@@ -1,20 +1,15 @@
 {
   "audit_version": "mso.dashboard.audit.v1",
-  "generated_at": "2026-09-05T19:11:49.661491+00:00",
+  "generated_at": "2026-09-06T13:27:04.301044+00:00",
   "minimum_overlap_scope": "per product contract",
   "products": [
     {
-      "product": "SVWAP",
       "audit_version": "svwap.csv.repair.audit.v2",
       "contract": "svwap.canonical.packet.v1",
-      "status": "PASS",
+      "generated_at": "2026-09-05T19:11:49.661491+00:00",
       "minimum_overlap_rows": 12,
       "minimum_overlap_scope": "independently per CSV and profile",
-      "generated_at": "2026-09-05T19:11:49.661491+00:00",
-      "source_commit": "0d198defc444567e4d9c52452cfc8bd09485fb95",
-      "status_counts": {
-        "PASS_RAW": 3
-      },
+      "product": "SVWAP",
       "reports": [
         {
           "asset": "BINANCE:BTCUSDT.P",
@@ -67,26 +62,146 @@
           "status": "PASS_RAW",
           "timeframe": "15m"
         }
-      ]
+      ],
+      "source_commit": "0d198defc444567e4d9c52452cfc8bd09485fb95",
+      "status": "PASS",
+      "status_counts": {
+        "PASS_RAW": 3
+      }
     },
     {
-      "product": "CPPO",
       "audit_version": "cppo.csv.backfill.audit.v1",
       "contract": "cppo.pro@1.0.0",
-      "base_timeframe": "15m",
-      "status": "NOT_PUBLISHED",
+      "generated_at": "2026-09-06T13:27:00.745637+00:00",
       "minimum_overlap_rows": 12,
+      "minimum_overlap_scope": "independently per CSV and lane",
+      "product": "CPPO",
+      "reports": [
+        {
+          "asset": "BTCUSDT.P",
+          "csv": "20260805T0845Z.csv",
+          "csv_only_rows": 0,
+          "evidence": "Per-CSV producer reference JSONL is not present.",
+          "lane": "core",
+          "lane_join_pass": true,
+          "mismatch_count": 0,
+          "mismatch_fields": [],
+          "producer_only_rows": 0,
+          "producer_overlap_pass": false,
+          "producer_overlap_rows": 0,
+          "raw_parity": false,
+          "shared_core_mtf_rows": 13763,
+          "status": "WAITING_FOR_PRODUCER_REFERENCE",
+          "timeframe": "15m"
+        },
+        {
+          "asset": "BTCUSDT.P",
+          "csv": "20260906T0745Z.csv",
+          "csv_only_rows": 20851,
+          "evidence": "Per-CSV producer parity did not pass.",
+          "lane": "mtf",
+          "lane_join_pass": true,
+          "mismatch_count": 33,
+          "mismatch_fields": [
+            "CSV MTF Consensus Score",
+            "CSV MTF Control Score",
+            "CSV MTF Structural Control Score"
+          ],
+          "producer_only_rows": 0,
+          "producer_overlap_pass": true,
+          "producer_overlap_rows": 12,
+          "raw_parity": false,
+          "shared_core_mtf_rows": 13763,
+          "status": "FAIL",
+          "timeframe": "15m"
+        },
+        {
+          "asset": "ETHUSDT.P",
+          "csv": "20260805T0845Z.csv",
+          "csv_only_rows": 0,
+          "evidence": "Per-CSV producer reference JSONL is not present.",
+          "lane": "core",
+          "lane_join_pass": true,
+          "mismatch_count": 0,
+          "mismatch_fields": [],
+          "producer_only_rows": 0,
+          "producer_overlap_pass": false,
+          "producer_overlap_rows": 0,
+          "raw_parity": false,
+          "shared_core_mtf_rows": 13763,
+          "status": "WAITING_FOR_PRODUCER_REFERENCE",
+          "timeframe": "15m"
+        },
+        {
+          "asset": "ETHUSDT.P",
+          "csv": "20260906T0745Z.csv",
+          "csv_only_rows": 20851,
+          "evidence": "Per-CSV producer parity did not pass.",
+          "lane": "mtf",
+          "lane_join_pass": true,
+          "mismatch_count": 24,
+          "mismatch_fields": [
+            "CSV MTF Consensus Score",
+            "CSV MTF Control Score"
+          ],
+          "producer_only_rows": 0,
+          "producer_overlap_pass": true,
+          "producer_overlap_rows": 12,
+          "raw_parity": false,
+          "shared_core_mtf_rows": 13763,
+          "status": "FAIL",
+          "timeframe": "15m"
+        },
+        {
+          "asset": "SOLUSDT.P",
+          "csv": "20260805T0845Z.csv",
+          "csv_only_rows": 0,
+          "evidence": "Per-CSV producer reference JSONL is not present.",
+          "lane": "core",
+          "lane_join_pass": true,
+          "mismatch_count": 0,
+          "mismatch_fields": [],
+          "producer_only_rows": 0,
+          "producer_overlap_pass": false,
+          "producer_overlap_rows": 0,
+          "raw_parity": false,
+          "shared_core_mtf_rows": 13763,
+          "status": "WAITING_FOR_PRODUCER_REFERENCE",
+          "timeframe": "15m"
+        },
+        {
+          "asset": "SOLUSDT.P",
+          "csv": "20260906T0745Z.csv",
+          "csv_only_rows": 20851,
+          "evidence": "Per-CSV producer parity did not pass.",
+          "lane": "mtf",
+          "lane_join_pass": true,
+          "mismatch_count": 19,
+          "mismatch_fields": [
+            "CSV MTF Consensus Score",
+            "CSV MTF Control Score"
+          ],
+          "producer_only_rows": 0,
+          "producer_overlap_pass": true,
+          "producer_overlap_rows": 12,
+          "raw_parity": false,
+          "shared_core_mtf_rows": 13763,
+          "status": "FAIL",
+          "timeframe": "15m"
+        }
+      ],
+      "source_commit": "337fb1f7421f12f7f61c7402ab6769f0860ea9a4",
+      "status": "FAIL",
       "status_counts": {
-        "NOT_PUBLISHED": 1
-      },
-      "source_commit": null,
-      "message": "Awaiting CPPO producer packet reference window and CSV export evidence.",
-      "reports": []
+        "FAIL": 3,
+        "WAITING_FOR_PRODUCER_REFERENCE": 3
+      }
     }
   ],
   "status": "PARTIAL",
   "status_counts": {
+    "FAIL": 3,
     "PASS_RAW": 3,
-    "NOT_PUBLISHED": 1
+    "WAITING_FOR_PRODUCER_REFERENCE": 3
   }
 }
