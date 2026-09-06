@@ -66,9 +66,16 @@ function card(label, value) {
 }
 
 function profileGateText(item, minimum) {
-  if (item.profile_gate === false || item.product === "CPPO") {
-    return item.product === "CPPO" ? "No SVWAP profile gate" : "No profile gate";
+  if (item.product === "CPPO") {
+    if (item.csv === "—") return "Awaiting CPPO lane audit";
+    const lane = safe(item.lane, "lane").toUpperCase();
+    const producer = lane + " " + safe(item.producer_overlap_rows, "0") + " rows";
+    const join = " · CORE↔MTF " + safe(item.shared_core_mtf_rows, "0") + " shared";
+    return minimum
+      ? producer + " (minimum " + safe(minimum, "0") + " independently)" + join
+      : producer + join;
   }
+  if (item.profile_gate === false) return "No profile gate";
   const counts = item.profile_overlap_counts || {};
   const text = "R1 " + safe(counts.R1, "0") +
     " · R2 " + safe(counts.R2, "0") +
@@ -126,7 +133,7 @@ function aggregate(report, rows) {
   const pending = bundles.filter(item => !["PASS", "PASS_RAW", "PASS_COMPOSITE"].includes(item.status)).length;
   return {
     total: rows.filter(item => item.csv !== "—").length,
-    pass: (counts.PASS_RAW || 0) + (counts.PASS_COMPOSITE || 0),
+    pass: (counts.PASS || 0) + (counts.PASS_RAW || 0) + (counts.PASS_COMPOSITE || 0),
     insufficient: counts.INSUFFICIENT_OVERLAP || 0,
     waiting: counts.WAITING_FOR_PRODUCER_REFERENCE || 0,
     pending,
@@ -156,7 +163,7 @@ function render(report) {
   const table = document.createElement("table");
   const head = document.createElement("thead");
   const headerRow = document.createElement("tr");
-  ["Product", "Asset", "Timeframe", "CSV", "Disposition", "Raw parity", "Complete shared rows", "Contract gate", "Evidence"].forEach(textValue => {
+  ["Product", "Asset", "Timeframe", "CSV", "Disposition", "Raw parity", "Producer overlap / join", "Contract gate", "Evidence"].forEach(textValue => {
     const th = document.createElement("th");
     th.textContent = textValue;
     headerRow.append(th);
@@ -173,7 +180,9 @@ function render(report) {
       safe(item.csv),
       statusLabel(item.status),
       item.raw_parity === true ? "Pass" : item.raw_parity === false ? "Fail" : "Not run",
-      safe(item.producer_overlap_rows, "0") + " rows",
+      item.product === "CPPO"
+        ? safe(item.producer_overlap_rows, "0") + " producer · " + safe(item.shared_core_mtf_rows, "0") + " shared"
+        : safe(item.producer_overlap_rows, "0") + " rows",
       profileGateText(item, item.minimum_overlap_rows),
       item.evidence ||
         (item.composite_repair_available ? "Composite repair available" :
