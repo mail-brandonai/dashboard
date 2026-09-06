@@ -133,7 +133,7 @@ function aggregate(report, rows) {
   const pending = bundles.filter(item => !["PASS", "PASS_RAW", "PASS_COMPOSITE"].includes(item.status)).length;
   return {
     total: rows.filter(item => item.csv !== "—").length,
-    pass: (counts.PASS_RAW || 0) + (counts.PASS_COMPOSITE || 0),
+    pass: (counts.PASS || 0) + (counts.PASS_RAW || 0) + (counts.PASS_COMPOSITE || 0),
     insufficient: counts.INSUFFICIENT_OVERLAP || 0,
     waiting: counts.WAITING_FOR_PRODUCER_REFERENCE || 0,
     pending,
