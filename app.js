@@ -6,7 +6,7 @@ const updated = document.querySelector("#updated");
 const overall = document.querySelector("#overall-status");
 
 const labels = {
-  total: "CSV files",
+  total: "Asset streams",
   pass: "Passed",
   insufficient: "Insufficient overlap",
   waiting: "Awaiting reference",
@@ -132,6 +132,26 @@ function flattenReports(report) {
   return rows;
 }
 
+function latestRows(rows) {
+  const groups = new Map();
+  for (const item of rows) {
+    const key = [item.product, item.asset, item.timeframe].join("|");
+    if (!groups.has(key)) groups.set(key, []);
+    groups.get(key).push(item);
+  }
+  return [...groups.values()].map(items => {
+    const artifacts = items
+      .filter(item => item.csv !== "—")
+      .sort((left, right) => String(right.csv).localeCompare(String(left.csv)));
+    const latest = artifacts[0] || items[0];
+    return {
+      ...latest,
+      artifact_count: artifacts.length,
+      historical_csvs: artifacts.slice(1).map(item => item.csv)
+    };
+  });
+}
+
 function aggregate(report, rows) {
   const counts = {};
   rows.forEach(item => { counts[item.status] = (counts[item.status] || 0) + 1; });
@@ -148,7 +168,7 @@ function aggregate(report, rows) {
 }
 
 function render(report) {
-  const rows = flattenReports(report);
+  const rows = latestRows(flattenReports(report));
   const totals = aggregate(report, rows);
   summary.replaceChildren(
     card(labels.total, totals.total),
@@ -169,7 +189,7 @@ function render(report) {
   const table = document.createElement("table");
   const head = document.createElement("thead");
   const headerRow = document.createElement("tr");
-  ["Product", "Asset", "Timeframe", "CSV", "Disposition", "Raw parity", "Producer overlap / join", "Staged gates", "Evidence"].forEach(textValue => {
+  ["Product", "Asset", "Timeframe", "Latest CSV / artifacts", "Disposition", "Raw parity", "Producer overlap / join", "Staged gates", "Evidence"].forEach(textValue => {
     const th = document.createElement("th");
     th.textContent = textValue;
     headerRow.append(th);
@@ -183,16 +203,21 @@ function render(report) {
       safe(item.product),
       safe(item.asset),
       safe(item.timeframe),
-      safe(item.csv),
+      safe(item.csv) + (item.artifact_count > 1 ? " · " + item.artifact_count + " artifacts" : ""),
       statusLabel(item.status),
       item.raw_parity === true ? "Pass" : item.raw_parity === false ? "Fail" : "Not run",
       item.product === "CPPO"
         ? safe(item.producer_overlap_rows, "0") + " producer · " + safe(item.shared_core_mtf_rows, "0") + " shared"
         : safe(item.producer_overlap_rows, "0") + " rows",
       profileGateText(item),
-      item.evidence ||
-        (item.composite_repair_available ? "Composite repair available" :
-        item.mismatch_count ? safe(item.mismatch_count) + " mismatches" : "No mismatch evidence")
+      [
+        item.evidence ||
+          (item.composite_repair_available ? "Composite repair available" :
+          item.mismatch_count ? safe(item.mismatch_count) + " mismatches" : "No mismatch evidence"),
+        item.historical_csvs && item.historical_csvs.length
+          ? "History retained: " + item.historical_csvs.join(", ")
+          : ""
+      ].filter(Boolean).join(" · ")
     ];
     values.forEach((value, index) => {
       const td = document.createElement("td");
