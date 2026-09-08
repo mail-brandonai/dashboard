@@ -65,22 +65,28 @@ function card(label, value) {
   return article;
 }
 
-function profileGateText(item, minimum) {
+function gateSummary(gates) {
+  const values = gates || {};
+  return ["8", "16", "32", "64"].map((gate) => {
+    const detail = values[gate];
+    return gate + (detail && detail.pass ? " ✓" : " ·");
+  }).join(" · ");
+}
+
+function profileGateText(item) {
+  if (item.csv === "—") return "Awaiting audit";
+  const gates = gateSummary(item.overlap_gates);
   if (item.product === "CPPO") {
-    if (item.csv === "—") return "Awaiting CPPO lane audit";
     const lane = safe(item.lane, "lane").toUpperCase();
     const producer = lane + " " + safe(item.producer_overlap_rows, "0") + " rows";
     const join = " · CORE↔MTF " + safe(item.shared_core_mtf_rows, "0") + " shared";
-    return minimum
-      ? producer + " (minimum " + safe(minimum, "0") + " independently)" + join
-      : producer + join;
+    return gates + " · " + producer + join;
   }
-  if (item.profile_gate === false) return "No profile gate";
   const counts = item.profile_overlap_counts || {};
   const text = "R1 " + safe(counts.R1, "0") +
     " · R2 " + safe(counts.R2, "0") +
     " · R3 " + safe(counts.R3, "0");
-  return minimum ? text + " (minimum " + safe(minimum, "0") + " each)" : text;
+  return text + " · " + gates;
 }
 
 function productBundles(report) {
@@ -89,7 +95,7 @@ function productBundles(report) {
     product: "SVWAP",
     contract: report.contract,
     status: report.status,
-    minimum_overlap_rows: report.minimum_overlap_rows,
+    overlap_gates: report.overlap_gates || [],
     reports: Array.isArray(report.reports) ? report.reports : [],
     status_counts: report.status_counts || {},
     source_commit: report.source_commit
@@ -105,7 +111,7 @@ function flattenReports(report) {
         ...item,
         product: product.product,
         contract: product.contract,
-        minimum_overlap_rows: product.minimum_overlap_rows,
+        overlap_gates: product.overlap_gates || [],
         source_commit: product.source_commit
       })));
     } else {
@@ -163,7 +169,7 @@ function render(report) {
   const table = document.createElement("table");
   const head = document.createElement("thead");
   const headerRow = document.createElement("tr");
-  ["Product", "Asset", "Timeframe", "CSV", "Disposition", "Raw parity", "Producer overlap / join", "Contract gate", "Evidence"].forEach(textValue => {
+  ["Product", "Asset", "Timeframe", "CSV", "Disposition", "Raw parity", "Producer overlap / join", "Staged gates", "Evidence"].forEach(textValue => {
     const th = document.createElement("th");
     th.textContent = textValue;
     headerRow.append(th);
@@ -183,7 +189,7 @@ function render(report) {
       item.product === "CPPO"
         ? safe(item.producer_overlap_rows, "0") + " producer · " + safe(item.shared_core_mtf_rows, "0") + " shared"
         : safe(item.producer_overlap_rows, "0") + " rows",
-      profileGateText(item, item.minimum_overlap_rows),
+      profileGateText(item),
       item.evidence ||
         (item.composite_repair_available ? "Composite repair available" :
         item.mismatch_count ? safe(item.mismatch_count) + " mismatches" : "No mismatch evidence")
